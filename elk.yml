@@ -1,10 +1,14 @@
+---
+#ELK Playbook
 - name: setup prerequisites
-  hosts: elk-hosts
+  hosts: all
   become: true
   roles:
     - pre-requisites
-    - configure-hosts-file- name: install elasticsearch
-  hosts: elk-hosts
+    - configure-hosts-file
+
+- name: install elasticsearch
+  hosts: all
   serial: 1
   become: true
   roles:
@@ -18,11 +22,15 @@
     - configure-elastic-file
     - change-permissions
     - systemd-conf
-    - restart-elasticsearch- name: Install Kibana
-  hosts: kibana-host
+    - restart-elasticsearch
+
+- name: Install Kibana
+  hosts: all
   become: true
   roles:
-    - kibana- name: Install logstash
+    - kibana
+
+- name: Install logstash
   hosts: logstash-host
   become: true
   roles:
